@@ -8,6 +8,11 @@
 <body>
     <h2>Student Main</h2>
 
-    <p><a href="login.php">Logout</a></p>
+    <?php 
+        echo $_SESSION['email'] . "<br>";
+        echo $_SESSION['role'] . "<br>";
+    ?>
+
+    <p><a href="logout.php">Logout</a></p>
 </body>
 </html>
