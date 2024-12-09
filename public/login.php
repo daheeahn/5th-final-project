@@ -28,7 +28,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           } else {
               header("Location: teacher-main.php");
           }
-          echo "<p style='color: green;'>Hey</p>";
           exit();
       } else {
           $error_message = "Invalid email, password, or role";

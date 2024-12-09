@@ -5,8 +5,7 @@ ini_set('display_errors', 1);
 
 session_start();
 
-require_once('../src/views/users/create_table.php');
-require_once('../src/views/courses/create_table.php');
+require_once('../src/views/database/create_table.php');
 
 // Check if logged in
 if (!isset($_SESSION['email'])) {

@@ -1,7 +1,8 @@
 <?php
 require_once __DIR__ . '/../config/database.php';
 
-function createUsersTable() {
+function createTables() {
+
     global $pdo;
     try {
         // create users table 
@@ -14,24 +15,24 @@ function createUsersTable() {
         )";
         $pdo->exec($sql);
 
-        // create student-course connection table 
-        $sql = "CREATE TABLE IF NOT EXISTS student_courses (
-            student_id INT,
-            course_id INT,
-            enrollment_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-            PRIMARY KEY (student_id, course_id),
-            FOREIGN KEY (student_id) REFERENCES users(id) ON DELETE CASCADE,
-            FOREIGN KEY (course_id) REFERENCES courses(id) ON DELETE CASCADE
+        // create courses table
+        $sql = "CREATE TABLE IF NOT EXISTS courses (
+            id INT PRIMARY KEY AUTO_INCREMENT,
+            title VARCHAR(255) NOT NULL,
+            imagePath VARCHAR(255),
+            capacity INT NOT NULL,
+            instructor_id INT NOT NULL,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (instructor_id) REFERENCES users(id) ON DELETE CASCADE
         )";
         $pdo->exec($sql);
 
-        // create teacher-course connection table   
-        $sql = "CREATE TABLE IF NOT EXISTS teacher_courses (
-            teacher_id INT,
+        // create student-course connection table 
+        $sql = "CREATE TABLE IF NOT EXISTS student_courses (
+            id INT PRIMARY KEY AUTO_INCREMENT,
+            student_id INT,
             course_id INT,
-            registration_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-            PRIMARY KEY (teacher_id, course_id),
-            FOREIGN KEY (teacher_id) REFERENCES users(id) ON DELETE CASCADE,
+            FOREIGN KEY (student_id) REFERENCES users(id) ON DELETE CASCADE,
             FOREIGN KEY (course_id) REFERENCES courses(id) ON DELETE CASCADE
         )";
         $pdo->exec($sql);
@@ -43,6 +44,6 @@ function createUsersTable() {
     }
 }
 
-// execute create users table
-createUsersTable();
+// execute create table
+createTables();
 ?> 
