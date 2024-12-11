@@ -13,16 +13,20 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'teacher') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Teacher Main Page</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
-<body>
-    <h2>Teacher Main</h2>
+<body class="container">
+
+<div class="text-center mt-4 rounded border p-4 bg-success text-white mb-4">
+    <h2>Teacher view</h2>
 
     <?php 
-        echo $_SESSION['email'] . "<br>";
-        echo $_SESSION['role'] . "<br>";
+        echo "<p>" . htmlspecialchars($_SESSION['email']) . "</p>";
+        echo "<p>" . htmlspecialchars($_SESSION['role']) . "</p>";
     ?>
+</div>
 
-
+<section>
     <h2>Register New Course</h2>
     <form action="create-course.php" method="POST" enctype="multipart/form-data">
         <div>
@@ -39,6 +43,7 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'teacher') {
         </div>
         <button type="submit">Register Course</button>
     </form>
+    </section>
 
 
 
@@ -74,7 +79,7 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'teacher') {
 
     ?>
 
-    <p><a href="logout.php">Logout</a></p>
+    <p><a href="logout.php" class="btn btn-danger">Logout</a></p>
 
 </body>
 </html>
