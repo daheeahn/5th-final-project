@@ -53,17 +53,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_SESSION['role'] === 'teacher') {
             $stmt->execute();
             $stmt->close();
             echo "The course has been registered.";
+
+            // HERE STORE DATA IF 
         } else {
             echo "Fail to move file: " . print_r(error_get_last(), true);
             echo "An error occurred during file upload.";
+
+            //STORE DATA THAT THE ACTION HAS FAILED
+
         }
     } else {
         echo "File upload failed.";
+//HERE 
+
     }
 
     $conn->close();
 } else {
     echo "Invalid request.";
+    //HERE
 }
 // if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 //     if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'teacher') {

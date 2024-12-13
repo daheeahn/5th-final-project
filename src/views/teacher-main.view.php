@@ -41,7 +41,7 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'teacher') {
             <label for="capacity">Course Capacity:</label>
             <input type="number" id="capacity" name="capacity" min="1" required>
         </div>
-        <button type="submit">Register Course</button>
+        <button type="submit" class="bg-success">Register Course</button>
     </form>
     </section>
 
