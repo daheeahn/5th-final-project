@@ -29,7 +29,10 @@
     if ($registeredCoursesResult->num_rows > 0) {
         echo "<ul class='list-unstyled'>";
         while ($row = $registeredCoursesResult->fetch_assoc()) {
-            echo "<li>" . htmlspecialchars($row['title']) . " - " . htmlspecialchars($row['imagePath']) . " - Capacity: " . htmlspecialchars($row['capacity']) . " - Students Enrolled: " . htmlspecialchars($row['student_count']) . " 
+            echo "<li>" . htmlspecialchars($row['title']) /*. " - " . htmlspecialchars($row['imagePath']) . " - Capacity: " . htmlspecialchars($row['capacity']) . " - Students Enrolled: " . htmlspecialchars($row['student_count']) . " */
+           
+. " - <img src='" . htmlspecialchars($row['imagePath']) . "' alt='" . htmlspecialchars($row['title']) . "' style='width:100px; height:auto; border-radius: 50%;'> - Capacity: " . htmlspecialchars($row['capacity']) . " - Students Enrolled: " . htmlspecialchars($row['student_count']) . " 
+
             <form action='register-course.php' method='post' style='d-block'>
                 <input type='hidden' name='course_id' value='" . $row['id'] . "'>
                 <input type='submit' value='Register' class='btn btn-light btn-lg mt-2' style='font-weight: bold;'>
@@ -69,7 +72,7 @@
     $conn->close();
     ?>
 
-    <p><a href="logout.php">Logout</a></p>
+    <p><a href="logout.php" class="btn btn-danger">Logout</a></p>
 </div>
 </body>
 </html>
