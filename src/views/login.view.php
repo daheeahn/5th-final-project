@@ -8,7 +8,6 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-    <h2 id="title">Login</h2>  
     <div class="container d-flex justify-content-center align-items-center min-vh-100">
         <div class="col-12 col-md-6 col-lg-4">
             <form action="" method="POST" class="p-4 bg-light rounded shadow">

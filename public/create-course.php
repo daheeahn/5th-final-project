@@ -61,6 +61,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_SESSION['role'] === 'teacher') {
                 file_put_contents('course_creation_errors.log', "Error registering course '$title': " . $stmt->error . " on " . date('Y-m-d H:i:s') . "\n", FILE_APPEND);
             }
             $stmt->close();
+            echo "The course has been registered.";
+            header("Location: teacher-main.php");
+
+            // HERE STORE DATA IF 
         } else {
             echo "Fail to move file: " . print_r(error_get_last(), true);
             echo "An error occurred during file upload.";

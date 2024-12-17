@@ -14,6 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_SESSION['user_id'])) {
 
     if ($stmt->execute()) {
         echo "The course has been successfully registered.";
+        header("Location: student-main.php");
     } else {
         echo "Failed to register the course: " . $stmt->error;
     }

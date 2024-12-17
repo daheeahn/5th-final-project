@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="./styles/login.css">  
 </head>
 <body>
-    <h2 id="title">Register</h2>
     <div class="container d-flex justify-content-center align-items-center min-vh-100">
         <div class="col-12 col-md-6 col-lg-4">
             <form action="" method="POST" class="p-4 bg-light rounded shadow">
