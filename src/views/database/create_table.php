@@ -37,6 +37,8 @@ function createTables() {
         )";
         $pdo->exec($sql);
 
+        //database to log
+
         return true;
     } catch(PDOException $e) {
         echo "Table creation failed: " . $e->getMessage();

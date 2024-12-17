@@ -26,7 +26,7 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'teacher') {
     ?>
 </div>
 
-<section>
+<section >
     <h2>Register New Course</h2>
     <form action="create-course.php" method="POST" enctype="multipart/form-data">
         <div>
