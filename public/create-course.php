@@ -53,6 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_SESSION['role'] === 'teacher') {
             $stmt->execute();
             $stmt->close();
             echo "The course has been registered.";
+            header("Location: teacher-main.php");
 
             // HERE STORE DATA IF 
         } else {
