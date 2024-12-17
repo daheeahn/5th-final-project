@@ -21,8 +21,13 @@
     // Course list retrieval
     $conn = new mysqli('localhost', 'tamwood', '1234', 'lecture_platform_db');
     
+    $student_id = $_SESSION['user_id'];
+
     // Retrieve all courses
-    $stmt = $conn->prepare("SELECT id, title, imagePath, capacity, (SELECT COUNT(*) FROM student_courses WHERE course_id = courses.id) AS student_count FROM courses");
+    // $stmt = $conn->prepare("SELECT id, title, imagePath, capacity, (SELECT COUNT(*) FROM student_courses WHERE course_id = courses.id) AS student_count FROM courses");
+    $stmt = $conn->prepare("SELECT id, title, imagePath, capacity, (SELECT COUNT(*) FROM student_courses WHERE course_id = courses.id) AS student_count FROM courses WHERE id NOT IN (SELECT course_id FROM student_courses WHERE student_id = ?)");
+    // $stmt = $conn->prepare("SELECT id, title, imagePath, capacity, (SELECT COUNT(*) FROM student_courses WHERE course_id = courses.id) AS student_count FROM courses WHERE id NOT IN (5)");
+    $stmt->bind_param("i", $student_id);
     $stmt->execute();
     $registeredCoursesResult = $stmt->get_result();
 
@@ -56,9 +61,9 @@
     $registeredCoursesResult = $stmt->get_result();
 
     if ($registeredCoursesResult->num_rows > 0) {
-        echo "<ul>";
+        echo "<ul class='list-unstyled'>";
         while ($row = $registeredCoursesResult->fetch_assoc()) {
-            echo "<li>" . htmlspecialchars($row['title']) . " - " . htmlspecialchars($row['imagePath']) . " 
+            echo "<li>" . htmlspecialchars($row['title']) . " - " . "<img src='" . htmlspecialchars($row['imagePath']) . "' alt='" . htmlspecialchars($row['title']) . "' style='width:100px; height:auto; border-radius: 50%;'>" . " 
             <form action='unregister-course.php' method='post' style='display:inline;'>
                 <input type='hidden' name='student_course_id' value='" . $row['id'] . "'>
                 <input type='submit' value='Unregister'>
