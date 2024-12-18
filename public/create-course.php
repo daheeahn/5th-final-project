@@ -7,17 +7,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_SESSION['role'] === 'teacher') {
     $instructor_id = $_SESSION['user_id'];
     $image = $_FILES['image'];
 
-
-    // $pdo = new PDO("mysql:host=localhost;dbname=lecture_platform_db", "tamwood", "1234");
-    // $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    
-    // // find user by email and role
-    // $stmt = $pdo->prepare("SELECT * FROM users WHERE email = ? AND role = ?");
-    // $stmt->execute([$email, $role]);
-    // $user = $stmt->fetch();
-
     // Database connection
-    $conn = new mysqli('localhost', 'tamwood', '1234', 'lecture_platform_db');
+    // $conn = new mysqli('localhost', 'tamwood', '1234', 'lecture_platform_db');
+    require_once('../src/database/DataBaseConnection.php');
+    $conn = DatabaseConnection::getInstance();
 
     // Image upload processing
     $targetDir = "uploads/"; // Directory to upload
@@ -49,18 +42,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_SESSION['role'] === 'teacher') {
         if (move_uploaded_file($image["tmp_name"], $targetFile)) {
             // Add course to the database
             $stmt = $conn->prepare("INSERT INTO courses (title, instructor_id, imagePath, capacity) VALUES (?, ?, ?, ?)");
-            $stmt->bind_param("sisi", $title, $instructor_id, $targetFile, $capacity);
+            // $stmt->bind_param("sisi", $title, $instructor_id, $targetFile, $capacity);
+            $stmt->bindValue(1, $title);
+            $stmt->bindValue(2, $instructor_id);
+            $stmt->bindValue(3, $targetFile);
+            $stmt->bindValue(4, $capacity);
+
             if ($stmt->execute()) {
                 echo "The course has been registered.";
                 // HERE STORE DATA IF
                 // Log the successful course creation
                 file_put_contents('create-course.log', "Course '$title' created by instructor ID $instructor_id on " . date('Y-m-d H:i:s') . "\n", FILE_APPEND);
             } else {
-                echo "Failed to register the course: " . $stmt->error;
+                echo "Failed to register the course: " . $stmt->errorInfo()[2];
                 // Log the error
                 file_put_contents('create-course.log', "Error registering course '$title': " . $stmt->error . " on " . date('Y-m-d H:i:s') . "\n", FILE_APPEND);
             }
-            $stmt->close();
+            $stmt->closeCursor();
             echo "The course has been registered.";
             header("Location: teacher-main.php");
 
@@ -79,8 +77,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_SESSION['role'] === 'teacher') {
         header("Location: teacher-main.php"); // Redirect back to the main page
         exit();
     }
-
-    $conn->close();
 } else {
     echo "Invalid request.";
     // HERE
@@ -89,50 +85,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_SESSION['role'] === 'teacher') {
     exit();
 }
 
-
-
-
-
-
-
-
-// if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-//     if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'teacher') {
-//         header('Location: /login.php');
-//         exit();
-//     }
-
-//     $title = $_POST['title'];
-//     $teacher_id = $_SESSION['user_id'];
-
-//     try {
-//         // start transaction
-//         $pdo->beginTransaction();
-
-//         // insert course into courses table
-//         $sql = "INSERT INTO courses (title, instructor) VALUES (?, ?)";
-//         $stmt = $pdo->prepare($sql);
-//         $stmt->execute([$title, $teacher_id]);
-        
-//         // get the ID of the newly created course
-//         $course_id = $pdo->lastInsertId();
-
-//         // insert teacher-course relationship into teacher_courses table
-//         $sql = "INSERT INTO teacher_courses (teacher_id, course_id) VALUES (?, ?)";
-//         $stmt = $pdo->prepare($sql);
-//         $stmt->execute([$teacher_id, $course_id]);
-
-//         // commit transaction
-//         $pdo->commit();
-
-//         // redirect to teacher dashboard
-//         // header('Location: /views/teacher/dashboard.php?success=1');
-//         exit();
-
-//     } catch(PDOException $e) {
-//         // rollback transaction
-//         $pdo->rollBack();
-//         echo "Failed to create course: " . $e->getMessage();
-//     }
-// }
 ?>

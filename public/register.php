@@ -9,8 +9,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $role = $_POST['role'];
   
   try {
-    $pdo = new PDO("mysql:host=localhost;dbname=lecture_platform_db", "tamwood", "1234");
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    require_once('../src/database/DataBaseConnection.php'); // Include the DatabaseConnection class
+    $pdo = DatabaseConnection::getInstance(); 
     
     $stmt = $pdo->prepare("INSERT INTO users (email, password, role) VALUES (?, ?, ?)");
     $stmt->execute([$email, $hashed_password, $role]);
