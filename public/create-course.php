@@ -54,11 +54,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_SESSION['role'] === 'teacher') {
                 echo "The course has been registered.";
                 // HERE STORE DATA IF
                 // Log the successful course creation
-                file_put_contents('course_creation.log', "Course '$title' created by instructor ID $instructor_id on " . date('Y-m-d H:i:s') . "\n", FILE_APPEND);
+                file_put_contents('create-course.log', "Course '$title' created by instructor ID $instructor_id on " . date('Y-m-d H:i:s') . "\n", FILE_APPEND);
             } else {
                 echo "Failed to register the course: " . $stmt->error;
                 // Log the error
-                file_put_contents('course_creation_errors.log', "Error registering course '$title': " . $stmt->error . " on " . date('Y-m-d H:i:s') . "\n", FILE_APPEND);
+                file_put_contents('create-course.log', "Error registering course '$title': " . $stmt->error . " on " . date('Y-m-d H:i:s') . "\n", FILE_APPEND);
             }
             $stmt->close();
             echo "The course has been registered.";
@@ -69,7 +69,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_SESSION['role'] === 'teacher') {
             echo "Fail to move file: " . print_r(error_get_last(), true);
             echo "An error occurred during file upload.";
             // STORE DATA THAT THE ACTION HAS FAILED
-            file_put_contents('file_upload_errors.log', "Failed to move uploaded file for course '$title' on " . date('Y-m-d H:i:s') . "\n", FILE_APPEND);
+            file_put_contents('create-course.log', "Failed to move uploaded file for course '$title' on " . date('Y-m-d H:i:s') . "\n", FILE_APPEND);
         }
     } else {
         echo "File upload failed.";

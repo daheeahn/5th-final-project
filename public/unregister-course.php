@@ -20,8 +20,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['student_course_id'])) 
     // Execute the query
     if ($stmt->execute()) {
         echo "Course unregistered successfully.";
+        file_put_contents('unregister-course.log', "Unregistered [student_course_id='$student_course_id'] on " . date('Y-m-d H:i:s') . "\n", FILE_APPEND);
     } else {
         echo "Error: " . $stmt->error;
+        file_put_contents('unregister-course.log', "Failed to unregister course [student_course_id='$student_course_id'] on " . date('Y-m-d H:i:s') . "\n", FILE_APPEND);
     }
 
     // Close the statement
