@@ -1,4 +1,28 @@
 <?php
+session_start(); // Avvia la sessione
+
+// Simulazione di un login
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Supponiamo che tu abbia già verificato le credenziali dell'utente
+    $_SESSION['user_id'] = 1; // ID dell'utente
+    $_SESSION['email'] = 'user@example.com';
+    $_SESSION['role'] = 'teacher';
+    header('Location: teacher-main.php'); // Reindirizza alla pagina principale
+    exit();
+}
+
+// Controllo dell'accesso
+if (!isset($_SESSION['user_id'])) {
+    header('Location: login.php'); // Reindirizza se non è loggato
+    exit();
+}
+
+// Mostra informazioni utente
+echo "Welcome, " . htmlspecialchars($_SESSION['email']);
+?>
+
+<a href="logout.php">Logout</a>
+
 require_once __DIR__ . '/../config/database.php';
 
 function createTables() {
@@ -37,6 +61,8 @@ function createTables() {
         )";
         $pdo->exec($sql);
 
+        //database to log
+
         return true;
     } catch(PDOException $e) {
         echo "Table creation failed: " . $e->getMessage();
@@ -46,4 +72,23 @@ function createTables() {
 
 // execute create table
 createTables();
+
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+} else {
+    echo "Connected successfully to the database.";
+}
+
+// Esegui una query di test
+$stmt = $pdo->query("SELECT * FROM users LIMIT 1");
+if ($stmt) {
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+    if ($user) {
+        echo "User found: " . htmlspecialchars($user['email']);
+    } else {
+        echo "No users found.";
+    }
+} else {
+    echo "Error executing query: " . $pdo->errorInfo();
+}
 ?> 
