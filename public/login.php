@@ -16,7 +16,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       $stmt->execute([$email, $role]);
       $user = $stmt->fetch();
 
-      if ($user && $password === $user['password']) {
+      $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+      if ($user && password_verify($password, $hashed_password)) {
           // success login
           $_SESSION['user_id'] = $user['id'];
           $_SESSION['email'] = $user['email'];
