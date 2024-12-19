@@ -1,25 +1,33 @@
+# Lecture Platform
+
+## Introduction
+
+This project is a web-based platform that allows teachers and students to manage and register for courses. Users can access various features based on their roles.
+
 ## Features
 
-- When you login as a 👩‍🏫teacher:
+### When logged in as a Teacher (👩‍🏫):
 
-  - create a new course
-  - check your courses
-  - terminate a course
+- Create a new course
+- Check your courses
+- Terminate a course
 
-- When you login as a 👩‍🎓student:
-  - check courses
-  - register a course
-  - unregister a course
+### When logged in as a Student (👩‍🎓):
 
-## To-do
+- Check courses
+- Register for a course
+- Unregister from a course
 
-- [ ] add css to `login.view.php`
-- [ ] add css to `register.view.php`
-- [ ] add css to `student-main.view.php`
-- [ ] add css to `teacher-main.view.php`
-- [ ] add a feature that prevents registration if the course capacity is full
+## Installation and Running
 
-## [For developer] Create user account in phpadmin
+1. **Set up Local Server**: Access `localhost/phpmyadmin/` to set up the database.
+2. **Create User Account**: Create a new user with the username 'tamwood' and password '1234'.
+3. **Install Required Packages**: Install the necessary PHP and MySQL packages for the project.
+4. **Run the Server**: Start the web server and access `public/index.php`.
 
-1. Access localhost/phpmyadmin/
-2. Create a new user named 'tamwood' with the password '1234'
+## Tech Stack
+
+- PHP
+- MySQL
+- HTML/CSS
+- Bootstrap
